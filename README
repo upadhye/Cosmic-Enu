@@ -1,0 +1,83 @@
+================================================================================
+============================ Cosmic-Enu version 1.0 ============================
+================================================================================
+
+Cosmic-Enu is an emulator for the non-linear perturbative power spectrum of the 
+massive neutrinos, as discussed in Upadhye, et al., "Cosmic-Eν: An emulator for 
+the non-linear neutrino power spectrum" (2023).  
+
+--------------------------------------------------------------------------------
+
+Installation:
+
+Cosmic-Enu relies on the GNU Scientific Library (GSL), available at 
+https://www.gnu.org/software/gsl/ .  Once this has been installed, edit the 
+PATHS variable in Makefile to include the locations of the GSL headers and 
+libraries.  Then compile Cosmic-Enu using 'make' from the command prompt.
+
+Parallelization in Cosmic-Enu uses OpenMP.  The code may be compiled without 
+parallelization by deleting the "-fopenmp" flag in the Makefile.
+
+--------------------------------------------------------------------------------
+
+Running:
+
+Cosmic-Enu is run directly from the command prompt.  It requires at least ten
+arguments, in the following order.
+
+  1. name: A name for the cosmological model, made up of alphanumeric 
+     characters only, numbering no more than 150.  Cosmic-Enu output for the 
+     model named EXAMPLE at redshift z=REDSHIFT will be written to the file 
+     enu_EXAMPLE_zREDSHIFT.dat .
+
+  2. Omega_{m,0} h^2: The physical matter density fraction at z=0, which must
+     lie between 0.12 and 0.155.
+
+  3. Omega_{b,0} h^2: The physical baryon density fraction at z=0, which must
+     lie between 0.0215 and 0.0235.
+
+  4. sigma_8: The total matter fluctuation amplitude in spheres of radius
+     8 Mpc/h, which must lie between 0.7 and 0.9.
+
+  5. h: The reduced Hubble parameter, H_0 / (100 km/sec/Mpc), which must lie 
+     between 0.55 and 0.85.
+
+  6. n_s: The primordial spectral tilt, such that the curvature perturbation 
+     is proportional to k^(n_s-1); n_s must be between 0.85 and 1.05.
+
+  7. w_0: The value of the dark energy equation of state today, in the 
+     Chevalier-Polarski-Linder parameterization, w(z) = w_0 + w_a*z / (z+1).
+     w_0 must lie between -1.3 and -0.7.
+
+  8. w_a: The redshift derivative of the dark energy equation of state today, in
+     the Chevalier-Polarski-Linder parameterization, w(z) = w_0 + w_a*z / (z+1).
+     (-w_0-w_a)^{1/4} must lie between 0.3 and 1.29.
+
+  9. Omega_{nu,0} h^2: The physical neutrino density fraction at z=0, which must
+     lie between 0.00017 and 0.01.  Note, however, that Cosmic-Enu assumes
+     three equal-mass neutrinos, limiting its accuracy at the lowest values of
+     the neutrino density fraction.
+
+ 10. z_list: A list of redshifts at which to emulate the power spectrum, which
+     must lie between 0 and 3.04.  At least one redshift must be provided.
+     Additional redshifts are separated by spaces and may be in any order.
+
+A sample shell script "run" is included with the code.  It computes z=0 power
+spectra for the ten out-of-sample test models named E001-E010 in Table 2 of 
+Upadhye, et al. (2023).
+
+--------------------------------------------------------------------------------
+
+Outputs:
+
+Cosmic-Enu outputs the dimensionless power spectrum of the total neutrino
+density perturbations, Delta^2_{nu}, along with the dimensionless power spectra
+of neutrino initial-momentum deciles L, Delta^2_{nu,L}.  Decile L=0 corresponds
+to the 10% of the neutrinos with the lowest initial momenta, decile L=1 to the
+next-lowest-momentum 10%, and so on.
+
+Each file output by Cosmic-Enu has 12 columns.  Column 1 lists the wave number k
+in units of h/Mpc; columns 2 through 11 list Delta^2_{nu,L} with L increasing
+from 0 to 9; and column 12 lists Delta^2_{nu}.  The accuracy of each of these
+power spectra is quantified in Sections 4 and 5 of Upadhye, et al. (2023).
+
