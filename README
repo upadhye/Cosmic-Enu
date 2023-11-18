@@ -43,7 +43,7 @@ arguments, in the following order.
      between 0.55 and 0.85.
 
   6. n_s: The primordial spectral tilt, such that the curvature perturbation 
-     is proportional to k^(n_s-1); n_s must be between 0.85 and 1.05.
+     power is proportional to k^(n_s-1); n_s must be between 0.85 and 1.05.
 
   7. w_0: The value of the dark energy equation of state today, in the 
      Chevalier-Polarski-Linder parameterization, w(z) = w_0 + w_a*z / (z+1).
